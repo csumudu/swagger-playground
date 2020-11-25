@@ -1,0 +1,41 @@
+@import 'antd/dist/antd.css';
+@import 'swagger-ui-react/swagger-ui.css';
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.ant-card {
+  height: 100%;
+}
+
+.page-container {
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.ant-table-content {
+  overflow: auto !important;
+}
+
+.ant-layout-sider-collapsed {
+  padding-left: 0 !important;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected {
+  background-color: #31373e;
+}
+
+.ant-menu-dark.ant-menu-horizontal
+  > .ant-menu-item.ant-menu-item-selected:hover {
+  background-color: #31373e;
+}
+
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+  background-color: #31373e;
+}

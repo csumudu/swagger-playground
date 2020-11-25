@@ -3,19 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/glue": "^8.0.0",
+    "@hapi/h2o2": "^9.0.2",
+    "@hapi/hapi": "^20.0.3",
+    "@hapi/inert": "^6.0.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "antd": "^4.8.5",
+    "cpx": "^1.5.0",
+    "http-proxy-middleware": "^1.0.6",
+    "node-json-db": "^1.1.0",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "rxjs": "^6.6.3",
+    "swagger-ui-react": "^3.37.0",
+    "uuid": "^8.3.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cpx build/** server/public",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [

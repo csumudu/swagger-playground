@@ -1,0 +1,19 @@
+{
+    "files": [
+        {
+            "id": 1,
+            "name": "apiProductInventory.json",
+            "displayName": "apiProductInventory"
+        },
+        {
+            "id": 2,
+            "name": "apiAccountManagement.json",
+            "displayName": "apiAccountManagement"
+        },
+        {
+            "id": 3,
+            "name": "apiPaymentManagement.json",
+            "displayName": "apiPaymentManagement"
+        }
+    ]
+}

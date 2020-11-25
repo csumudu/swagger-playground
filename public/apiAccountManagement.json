@@ -1,0 +1,436 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Account Management",
+        "description": "This is Swagger UI environment generated for the TMF Account Management specification",
+        "version": "$Revision: 1.6 $"
+    },
+    "host": "sinlxsves19.csgicorp.com:50137",
+    "basePath": "/perest/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json;charset=utf-8"
+    ],
+    "produces": [
+        "application/json;charset=utf-8"
+    ],
+    "tags": [
+        {
+            "name": "billingAccount"
+        }
+    ],
+    "paths": {
+        "/billingAccount/{id}": {
+            "get": {
+                "operationId": "retrieveBillingAccount",
+                "summary": "Retrieves a Billing Account by Account Id",
+                "description": "This operation retrieves a BillingAccount entity. Attribute selection is enabled for all first level attributes.",
+                "tags": [
+                    "billingAccount"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Identifier of the account - SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_ID",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    },
+                    {
+						"name": "startDate",
+						"description": "Optional. For retrieving account balance details where the effective start date of the account transaction history records are greater than or equal to startDate, format: yyyy-mm-ddThh:nn:ss. Note: If neither startDate nor endDate is provided then there will be no account transaction history records (accountBalance) being returned. If a minium startDate (0001-01-01T00:00:00) and a maximum endDate (9999-12-30T23:59:59) is provided then a full list of account transaction history records will be returned under accountBalance.",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time",
+                        "in": "query"
+                    },
+                    {
+						"name": "endDate",
+						"description": "Optional. For retrieving account balance details where the effective start date of the account transaction history records are less than or equal to the endDate, format: yyyy-mm-ddThh:nn:ss.",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time",
+                        "in": "query"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/BillingAccount"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AccountBalance": {
+            "type": "object",
+            "description": "Balances linked to the account",
+            "required": [
+                "amount",
+                "balanceType",
+                "validFor"
+            ],
+            "properties": {
+                "balanceType": {
+                    "type": "string",
+                    "description": "Type of the balance. SV_MAPPING: perestapi.BALANCE_TYPE RT. E.g.: Invoice:<ACCOUNT_HISTORY_TRE_V.CUSTOMER_INVOICE_STR>, Payment:<ACCOUNT_HISTORY_TRE_V.RECEIPT_NR>, Adjustment:<ACCOUNT_HISTORY_TRE_V.ADJUSTMENT_NR>, Statement:<ACCOUNT_HISTORY_TRE_V.CUSTOMER_INVOICE_STR>, Other Transactions"
+                },
+                "accountingEntry": {
+                    "type": "string",
+                    "description": "Type of account entry. SV_MAPPING: ACCOUNT_TYPE.ASSET_INCREASE_PROMPT or ACCOUNT_TYPE.ASSET_DECREASE_PROMPT"
+                },				
+                "amount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Transaction amount. SV_MAPPING: ACCOUNT_HISTORY_TRE_V.CURRENT_BALANCE - ACCOUNT_HISTORY_TRE_V.PREVIOUS_BALANCE"
+                },
+                "balanceAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Balance amount. SV_MAPPING: ACCOUNT_HISTORY_TRE_V.CURRENT_BALANCE"
+                },
+                "disputedAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Invoice disputed amount. SV_MAPPING: ACCOUNT_HISTORY_TRE_V.DISPUTED_AMOUNT"
+                },				
+                "outstandingAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Invoice outstanding amount. SV_MAPPING: ACCOUNT_HISTORY_TRE_V.CURRENT_DUE"
+                },
+                "statementAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Statement amount. SV_MAPPING: ACCOUNT_HISTORY_TRE_V.STATEMENT_AMOUNT"
+                },				
+                "validFor": {
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "Balance validity period, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: ACCOUNT_HISTORY.EFFECTIVE_START_DATE, ACCOUNT_HISTORY.EFFECTIVE_END_DATE"
+                }
+            }
+        },
+        "AccountRef": {
+            "type": "object",
+            "description": "Account reference. A account may be a party account or a financial account.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of the transferred account. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_ID"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Reference of the transferred account - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Account PEREST URL>/<SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_ID>"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the transferred account. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_NAME"
+                }				
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "AccountRelationship": {
+            "type": "object",
+            "description": "Significant connection between accounts.",
+            "required": [
+                "relationshipType",
+                "validFor"
+            ],
+            "properties": {
+                "relationshipType": {
+                    "type": "string",
+                    "description": "Transferred Account"
+                },
+                "account": {
+                    "$ref": "#/definitions/AccountRef"
+                },
+                "validFor": {
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "Validity period of that relationship, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: ACCOUNT_TRE_V.EFFECTIVE_START_DATE and ACCOUNT_TRE_V.EFFECTIVE_END_DATE"
+                }
+            }
+        },
+        "AccountTaxExemption": {
+            "type": "object",
+            "description": "Proof of freedom from taxes imposed by a taxing jurisdiction",
+            "required": [
+                "issuingJurisdiction",
+                "validFor"
+            ],
+            "properties": {
+                "issuingJurisdiction": {
+                    "type": "string",
+                    "description": "Name of the taxing jurisdiction for which taxes are exempt. SV_MAPPING: TAX_CLASS->TAX_EXEMPT RT"
+                },
+                "validFor": {
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "Period for which the exemption is valid Period for which the exemption is valid, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: CUSTOMER_NODE_TRE_V.EFFECTIVE_START_DATE and CUSTOMER_NODE_TRE_V.EFFECTIVE_END_DATE"
+                }
+            }
+        },
+        "BillingAccount": {
+            "type": "object",
+            "description": "An account used for billing purposes.",
+            "required": [
+                "name",
+                "relatedParty"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of the account. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_ID"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Unique reference of the account - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<billingAccount PEREST URL>/ACCOUNT_TRE_V.ACCOUNT_ID"
+                },				
+                "accountType": {
+                    "type": "string",
+                    "description": "A categorization of an account. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_TYPE_DISPLAY_NAME"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Detailed description of account. SV_MAPPING: ACCOUNT_TYPE_TRE_V.DESCRIPTION"
+                },
+                "lastModified": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date of last modification of the account, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: ACCOUNT_TRE_V.LAST_MODIFIED"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the account. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_NAME"
+                },
+                "ratingType": {
+                    "type": "string",
+                    "description": "Indicates whether the account follows a specific payment option such as prepaid or postpaid. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_CLASS_CODE (Account Class RT) | ACCOUNT_TRE_V.ACCOUNT_CATEGORY_CODE (Account Category RT)"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Contains the lifecycle state. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_STATUS_CODE (RT acctbal.ACCOUNT_STATUS)"
+                },
+                "accountBalance": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AccountBalance"
+                    }
+                },
+                "accountRelationship": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AccountRelationship"
+                    }
+                },
+                "creditLimit": {
+                    "$ref": "#/definitions/Money",
+                    "description": "The maximum amount of money that may be charged on an account. SV_MAPPING: ACCOUNT_TRE_V.CREDIT_LIMIT"
+                },
+                "accountCharacteristic": {
+                    "type": "array",
+                    "description": "Characteristic name supported: CurrentBalance, UnbilledAmount, TotalInvoiceOverdue, AvailableCredit, TotalDisputed. Characteristic value supported: SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_BALANCE, ACCOUNT_TRE_V.UNBILLED_AMOUNT, Sum of ACCOUNT_HISTORY_TRE_V.CURRENT_DUE, ACCOUNT_TRE_V.AVAILABLE_CREDIT, (ACCOUNT_TRE_V.INVOICE_DISPUTED_AMOUNT + ACCOUNT_TRE_V.ACCOUNT_DISPUTED_AMOUNT). Characteristic value type supported: string. Characteristic unit supported: Unit of measurement of the characteristic value",
+                    "items": {
+                        "$ref": "#/definitions/AccountCharacteristic"
+                    }
+                },				
+                "relatedParty": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RelatedParty"
+                    },
+                    "minItems": 1
+                },
+                "taxExemption": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AccountTaxExemption"
+                    }
+                },
+                "restrictionDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date of account is due to change to change to a restricted mode of operation, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_RESTRICTION_DATE"
+                }
+            }
+        },
+        "AccountCharacteristic": {
+            "type": "object",
+            "description": "Describes a given characteristic of an object or entity through a name/value/unit.",
+            "required": [
+                "name",
+                "value",
+                "valueType"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the characteristic."
+                },
+                "valueType": {
+                    "type": "string",
+                    "description": "The type of the value provided."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The value of the characteristic provided as a string. The value of this attribute is depending on the corresponding name attribute value which indirectly determines the correct internal field to map."
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "The unit of measurement of the characteristic."
+                }				
+            }
+        },		
+        "Money": {
+            "type": "object",
+            "description": "A base / value business entity used to represent money",
+            "properties": {
+                "unit": {
+                    "type": "string",
+                    "description": "Currency (ISO4217 norm uses 3 letters to define the currency)"
+                },
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "A positive floating point number"
+                }
+            }
+        },
+        "RelatedParty": {
+            "type": "object",
+            "description": "Related Entity reference. A related party defines party or party role linked to a specific entity.",
+            "required": [
+                "@referredType",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of a related entity. SV_MAPPING: ACCOUNT_TRE_V.CUSTOMER_NODE_ID"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Reference of the related entity - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Customer PEREST URL>/<SV_MAPPING: ACCOUNT_TRE_V.CUSTOMER_NODE_ID>"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the related entity. SV_MAPPING: CUSTOMER_NODE_TRE_V.NODE_NAME"
+                },
+                "@referredType": {
+                    "type": "string",
+                    "description": "The actual type of the target instance when needed for disambiguation. SV_MAPPING: perestapi.REFERRED_TYPE->CUSTOMER RT"
+                }
+            }
+        },
+        "TimePeriod": {
+            "type": "object",
+            "description": "A period of time, either as a deadline (endDateTime only) a startDateTime only, or both",
+            "properties": {
+                "endDateTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End of the time period, using IETC-RFC-3339 format: yyyy-mm-ddThh:nn:ss"
+                },
+                "startDateTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start of the time period, using IETC-RFC-3339 format: yyyy-mm-ddThh:nn:ss"
+                }
+            }
+        },
+        "Error": {
+            "description": "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)",
+            "type": "object",
+            "required": [
+                "code",
+                "reason"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Application relevant detail, defined in the API or a common list."
+                },
+                "reason": {
+                    "type": "string",
+                    "description": "Explanation of the reason for the error which can be shown to a client user."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "More details and corrective actions related to the error which can be shown to a client user."
+                },
+                "status": {
+                    "type": "string",
+                    "description": "HTTP Error code extension"
+                },
+                "referenceError": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URI of documentation describing the error."
+                },
+                "@baseType": {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the super-class."
+                },
+                "@schemaLocation": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name."
+                }
+            }
+        }
+    }
+}

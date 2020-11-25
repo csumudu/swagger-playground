@@ -1,0 +1,1463 @@
+
+{
+    "swagger": "2.0",
+    "info":
+    {
+        "title": "Product Inventory",
+        "description": "Product Inventory Management",
+        "version": "$Revision: 1.32 $"
+    },
+    "host": "sinlxsves19.csgicorp.com:50137",
+    "basePath": "/perest/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json;charset=utf-8"
+    ],
+    "produces": [
+        "application/json;charset=utf-8"
+    ],
+    "tags": [
+        {
+            "name": "product"
+        }
+    ],
+    "paths":
+    {
+        "/product/{id}":
+        {
+            "get":
+            {
+                "operationId": "retrieveProduct",
+                "summary": "Retrieves a Product by ID",
+                "description": "This operation retrieves a Product entity. Attribute selection is enabled for all first level attributes.",
+                "tags": [
+                    "product"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Identifier of the Base Product. SV_MAPPING:PRODUCT_INSTANCE_TRE_V.PRODUCT_INSTANCE_ID",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Success",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Product"
+                        }
+                    },
+                    "400":
+                    {
+                        "description": "Bad Request",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401":
+                    {
+                        "description": "Unauthorized",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Forbidden",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404":
+                    {
+                        "description": "Not Found",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405":
+                    {
+                        "description": "Method Not allowed",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409":
+                    {
+                        "description": "Conflict",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Internal Server Error",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/product":
+        {
+            "get":
+            {
+                "operationId": "listProduct",
+                "summary": "List Product Objects",
+                "description": "This operation list Product entities. Attribute selection is enabled for all first level attributes.",
+                "tags": [
+                    "product"
+                ],
+                "parameters": [
+                    {
+                        "name": "customerNodeId",
+                        "description": "Identifier of the customer. SV_MAPPING:CUSTOMER_NODE_TRE_V.CUSTOMER_NODE_ID",
+                        "required": true,
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "name": "planName",
+                        "description": "Identifier of the offer display name. SV_MAPPING:PRODUCT_NSTANCE_TRE_V.PRODUCT_OFFER_DISPLAY_NAME. Default to All.",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "name": "serviceName",
+                        "description": "Identifier of the service name. SV_MAPPING:SERVICE_TRE_V.SERVICE_NAME. Support wildcard.",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "name": "subscriberName",
+                        "description": "Identifier of the subscriber name. SV_MAPPING:PERSON_TRE_V.OFFICIAL_NAME. Support wildcard.",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "name": "subscriptionStatus",
+                        "description": "SV_MAPPING:PRODUCT_INSTANCE_TRE_V.PRODUCT_INSTANCE_STATUS_CODE. Refer to RT Product Instance Status. Default to All",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "name": "offset",
+                        "description": "Requested index for start of resources to be provided in response. Default to 0",
+                        "required": false,
+                        "in": "query",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "description": "Requested number of resources to be provided in response. Default to configuration item API_CONFIGURATION1.DEFAULT_MAX_ROWS",
+                        "required": false,
+                        "in": "query",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "scn",
+                        "description": "Oracle system change number used for data read consistency. Default to emtpy string if configuration item API_CONFIGURATION1.USE_FLASHBACK is not ON",
+                        "required": false,
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Success",
+                        "headers":
+                        {
+                            "X-Result-Count":
+                            {
+                                "description": "Actual number of items returned in the response body",
+                                "type": "integer"
+                            },
+                            "X-Total-Count":
+                            {
+                                "description": "Total number of items matching criteria",
+                                "type": "integer"
+                            }
+                        },
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Product_List"
+                        }
+                    },
+                    "400":
+                    {
+                        "description": "Bad Request",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401":
+                    {
+                        "description": "Unauthorized",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Forbidden",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404":
+                    {
+                        "description": "Not Found",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405":
+                    {
+                        "description": "Method Not allowed",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409":
+                    {
+                        "description": "Conflict",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Internal Server Error",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions":
+    {
+        "Any": {},
+        "Product_List":
+        {
+            "type": "object",
+            "description": "Product List",
+            "required": [
+                "pagination"
+            ],
+            "properties":
+            {
+                "pagination":
+                {
+                    "description": "Query results and paging details.",
+                    "$ref": "#/definitions/PaginationRef"
+                },
+                "product":
+                {
+                    "description": "Describes the list of product details",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Product"
+                    }
+                }
+            }
+        },
+        "BillingAccountRef":
+        {
+            "type": "object",
+            "description": "BillingAccount reference. A BillingAccount is a detailed description of a bill structure.",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Customer primary account. SV_MAPPING:ACCOUNT_TRE_V.ACCOUNT_NAME"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Hyperlink to billing account of Billing Account Management. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<billingAccount PEREST URL>/ACCOUNT_NAME"
+                }
+            }
+        },
+        "Characteristic":
+        {
+            "type": "object",
+            "description": "Describes a given characteristic of an object or entity through a name/value pair.",
+            "required": [
+                "name",
+                "value"
+            ],
+            "properties":
+            {
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of entity field"
+                },
+                "valueType":
+                {
+                    "type": "string",
+                    "description": "The data type of the value provided. E.g.: 'string', 'real', 'integer', 'datetime', 'array' and 'hash'"
+                },
+                "value":
+                {
+                    "$ref": "#/definitions/Any",
+                    "description": "The value of the characteristic provided as string. The value of this attribute is depending on the corresponding name attribute value which indirectly determines the correct internal field to map."
+                }
+            }
+        },
+        "Product":
+        {
+            "type": "object",
+            "description": "A product offering procured by a customer or other interested party playing a party role. A product is realized as one or more service(s) and / or resource(s).",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of the product. SV_MAPPING:PRODUCT_INSTANCE_TRE_V.PRODUCT_INSTANCE_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Hyperlink to product of Product Inventory Management. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<product PEREST URL>/PRODUCT_INSTANCE_ID"
+                },
+                "validFor":
+                {
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "SV_MAPPING:PRODUCT_INSTANCE_TRE_V.EFFECTIVE_START_DATE to EFFECTIVE_END_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "primaryServiceName":
+                {
+                    "type": "string",
+                    "description": "The primary service number of the subscription. SV_MAPPING:SERVICE_TRE_V.SERVICE_NAME"
+                },
+                "billingAccount":
+                {
+                    "$ref": "#/definitions/BillingAccountRef",
+                    "description": "A BillingAccount is a detailed description of a bill structure"
+                },
+                "productRelationship":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductRelationship"
+                    },
+                    "description": "Describes parent <-> child offers relationships"
+                },
+                "productOffering":
+                {
+                    "$ref": "#/definitions/ProductOffering",
+                    "description": "Reference to product offering details."
+                },
+                "productCharacteristic":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    },
+                    "description": "Product characteristic values. Note that the productCharacteristic structure is currently not implemented."
+                },
+                "productSpecification":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductSpecification"
+                    },
+                    "description": "Feature specification details"
+                },
+                "productTerm":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductTerm"
+                    }
+                },
+                "realizingResource":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ResourceRef"
+                    },
+                    "description": "Describes equipment details"
+                },
+                "realizingService":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceRef"
+                    },
+                    "description": "Describes service details"
+                },
+                "status":
+                {
+                    "$ref": "#/definitions/ProductStatusType",
+                    "description": "The first status of product instance under the current offer instance"
+                },
+                "productPrice":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductPrice"
+                    },
+                    "description": "Describes the product prices."
+                },
+                "usageConsumption":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/UsageConsumption"
+                    },
+                    "description": "Describe a detail list of free unit consumption"
+                },
+                "summaryOfChanges":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/SummaryOfChange"
+                    },
+                    "description": "Describe a list of summary changes for products and relevant entities. Default to past 30 days of changes"
+                }
+            }
+        },
+        "ProductRelationship":
+        {
+            "type": "object",
+            "description": "Describes the parent - child offer relationships. It serves as offer node holder that contains companion products and other child offer nodes to form a product offer hierarchy.",
+            "required": [
+                "product",
+                "relationshipType"
+            ],
+            "properties":
+            {
+                "relationshipType":
+                {
+                    "type": "string",
+                    "description": "Default to 'childOffer'"
+                },
+                "product":
+                {
+                    "$ref": "#/definitions/ProductRefOrValue",
+                    "description": "Describes the components of the child offer."
+                }
+            }
+        },
+        "ProductRefOrValue":
+        {
+            "type": "object",
+            "description": "Product or Value class to define the associations of service, resource and product specification classes to the product offering",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of the product. SV_MAPPING:PRODUCT_INSTANCE_TRE_V.PRODUCT_OFFER_INSTANCE_ID"
+                },
+                "productRelationship":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductRelationship"
+                    },
+                    "description": "Describes parent - child product offer relationships"
+                },
+                "productOffering":
+                {
+                    "$ref": "#/definitions/ProductOffering",
+                    "description": "Define the product offering details."
+                },
+                "productCharacteristic":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    },
+                    "description": "Product characteristic values. Note that the structure is not implemented."
+                },
+                "productSpecification":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductSpecification"
+                    },
+                    "description": "Feature specification details"
+                },
+                "productTerm":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductTerm"
+                    }
+                },
+                "realizingResource":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ResourceRef"
+                    },
+                    "description": "Describes equipment details"
+                },
+                "realizingService":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceRef"
+                    },
+                    "description": "Describes service details"
+                },
+                "status":
+                {
+                    "$ref": "#/definitions/ProductStatusType",
+                    "description": "The first status of product instance under the current offer instance"
+                },
+                "productPrice":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductPrice"
+                    }
+                },
+                "usageConsumption":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/UsageConsumption"
+                    },
+                    "description": "Describe a detail list of free unit consumption at each child offers."
+                }
+            }
+        },
+        "ProductOffering":
+        {
+            "type": "object",
+            "description": "ProductOffering reference. A product offering represents entities that are orderable from the provider of the catalog, this resource includes pricing information.",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of a related entity. SV_MAPPING:PRODUCT_OFFER_TRE_V.PRODUCT_OFFER_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Hyperlink to Product Offering Management - <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<productOffering PEREST URL>/PRODUCT_OFFER_ID"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the related entity. SV_MAPPING:PRODUCT_OFFER_TRE_V.PRODUCT_OFFER_DISPLAY_NAME"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "Name of the related entity. SV_MAPPING:PRODUCT_OFFER_TRE_V.PRODUCT_OFFER_NAME"
+                },
+                "category":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/CategoryRef"
+                    },
+                    "description": "The category resource is used to group product offerings, service and resource candidates in logical containers. Categories can contain other categories and/or product offerings, resource or service candidates."
+                }
+            }
+        },
+        "CategoryRef":
+        {
+            "type": "object",
+            "description": "The category for grouping recommendations",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of a related entity. SV_MAPPING:perestapi.imp.CATEGORY->Ref Code"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Reference of the category - <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<Category PEREST URL>/<perestapi.imp.CATEGORY->Ref Code>"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the related entity. SV_MAPPING:perestapi.dCatalogCategory->Category Name"
+                }
+            }
+        },
+        "ProductSpecification":
+        {
+            "type": "object",
+            "description": "Product specification reference: A ProductSpecification is a detailed description of a tangible or intangible object made available externally in the form of a ProductOffering to customers or other parties playing a party role.",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Free Units -> offerId-productId-entCatCode-productInstanceId; Free Calling Numbers -> offerId-productId--productInstanceId"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Free Units -> offerDisplayName-companionDisplayName-entitlementCategory; Free Calling Numbers -> offerDisplayName-companionDisplayName-"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Lookup to DA perestapi.dEntOfferCategory and match with Free Units -> PRODUCT_OFFER_TRE_V.PRODUCT_OFFER_TAGS to return Category Name; Free Calling Numbers -> CTG_FREE_CALL"
+                },
+                "productSpecCharacteristic":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ProductSpecificationCharacteristic"
+                    },
+                    "description": "A characteristic quality or distinctive feature of a ProductSpecification."
+                }
+            }
+        },
+        "ProductSpecificationCharacteristic":
+        {
+            "type": "object",
+            "description": "A characteristic quality or distinctive feature of a ProductSpecification.",
+            "properties":
+            {
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the ProductSpecificationCharacteristic. Names which can be Recurring Period|Recurring Period Unit|Initial Allocation Amount|Initial Allocation Amount Unit|Recurring Allocation Amount|Recurring Allocation Amount Unit|Validity Period|Validity Period Unit|Warning Period|Warning Period Unit|Delay Period|Delay Period Unit|Shareable|MIN Count|MAX Count|Service Name|VAT ID|National ID|Customer Name|Spend Limit Event Type|Spend Limit Event Sub Type|Spend Limit Time Band"
+                },
+                "productSpecCharacteristicValue":
+                {
+                    "$ref": "#/definitions/ProductSpecificationCharacteristicValue",
+                    "description": "SV_MAPPING:ENTITLEMENT_TRE_V.RECURRING_PERIOD|RECURRING_PERIOD_UNIT_CODE|INITIAL_ALLOCATION_AMOUNT|UNIT_OF_MEASURE_COD|RECURRING_ALLOCATION_AMOUNT|UNIT_OF_MEASURE_COD|VALIDITY_PERIOD|VALIDITY_PERIOD_UNIT_CODE|WARNING_PERIOD|WARNING_PERIOD_UNIT_CODE|DELAY_PERIOD|DELAY_PERIOD_UNIT_CODE and PRODUCT_INSTANCE_TRE_V.GENERAL_3|Minimum Count of FnF Supported|Maximum Count of FnF Supported|PRODUCT_INSTANCE_TRE_V.GENERAL_1|FnF Customers' Party's PERSON_TRE_V.GENERAL_10|FnF Customers' Party's PERSON_TRE_V.PRIMARY_IDENTIFIER|FnF Customers' CUSTOMER_NODE_ID.NODE_NAME|Spend Limit Category Event Type Eligibility|Spend Limit Category Event Sub Type Eligibility|Spend Limit Category Time Band Eligibility"
+                }
+            }
+        },
+        "ProductSpecificationCharacteristicValue":
+        {
+            "type": "object",
+            "description": "A ProductSpecificationCharacteristicValue object is used to define a set of attributes, each of which can be assigned to a corresponding set of attributes in a ProductSpecificationCharacteristic object. The values of the attributes in the ProductSpecificationCharacteristicValue object describe the values of the attributes that a corresponding ProductSpecificationCharacteristic object can take on.",
+            "properties":
+            {
+                "value":
+                {
+                    "$ref": "#/definitions/Any",
+                    "description": "A discrete value that the characteristic can take on, or the actual value of the characteristic"
+                },
+                "valueType":
+                {
+                    "type": "string",
+                    "description": "A kind of value that the characteristic can take on, such as numeric, text and so forth"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name"
+                }
+            }
+        },
+        "ProductStatusType":
+        {
+            "type": "string",
+            "description": "SV_MAPPING:PRODUCT_INSTANCE_TRE_V.PRODUCT_INSTANCE_STATUS_CODE. Refer to RT Product Instance Status",
+            "enum": [
+                "Product Creation",
+                "Provisioning Required",
+                "Provisioned",
+                "Active",
+                "Suspended",
+                "Temporary Disconnect Required",
+                "Temporarily Disconnected",
+                "Reactivation Required",
+                "Cancellation Required",
+                "Cancelled",
+                "Moved",
+                "Upgraded"
+            ]
+        },
+        "ProductTerm":
+        {
+            "type": "object",
+            "description": "Description of a productTerm linked to this product. This represent a commitment with a duration",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Unique identifier of the productOfferingTerm. Contract -> offerId-productId-entitlementCategoryCode-productInstanceId"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Contract -> offerDisplayName-companionDisplayName-entitlementCategory"
+                },
+                "description":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Contract -> description from ProductOfferEntCat DA"
+                },
+                "duration":
+                {
+                    "$ref": "#/definitions/Quantity",
+                    "description": "Duration of the productTerm"
+                },
+                "validFor":
+                {
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "SV_MAPPING:PRODUCT_INSTANCE_TRE_V.ACTIVE_DATE to ACTIVE_DATE + duration"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Contract -> abbreviation from prodprice.contract.CONTRACT_TYPE RT"
+                },
+                "productTermCharacteristic":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    },
+                    "description": "A characteristic quality or distinctive feature of a product term."
+                }
+            }
+        },
+        "Quantity":
+        {
+            "type": "object",
+            "description": "An amount in a given unit",
+            "properties":
+            {
+                "amount":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Numeric value in a given unit"
+                },
+                "units":
+                {
+                    "type": "string",
+                    "description": "Unit"
+                }
+            }
+        },
+        "ResourceRef":
+        {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:EQUIPMENT_TRE_V.EQUIPMENT_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Reference of the related entity. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<resource PEREST URL>/<EQUIPMENT_TRE_V.EQUIPMENT_ID>"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:EQUIPMENT_TRE_V.SERIAL_NUMBER"
+                },
+                "value":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:SERVICE_TRE_V.SERVICE_NAME"
+                },
+                "@referredType":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:EQUIPMENT_TRE_V.EQUIPMENT_TYPE_DISPLAY_NAME"
+                },
+                "resourceCharacteristic":
+                {
+                    "description": "To store other equipment fields. SV_MAPPING:EQUIPMENT_TRE_V fields such as Model, Vanity Category, Number Pool, Make, Equipment Sub-type etc. New equipment fields can be configured in api.dAPIToCBFieldMapping table.",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    }
+                }
+            }
+        },
+        "ServiceRef":
+        {
+            "type": "object",
+            "description": "Service reference, for when Service is used by other entities",
+            "required": [
+                "id"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:SERVICE_TRE_V.SERVICE_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Reference of the related entity. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<service PEREST URL>/<SERVICE_TRE_V.SERVICE_ID>"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:SERVICE_TRE_V.SERVICE_NAME"
+                },
+                "@referredType":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:SERVICE_TRE_V.SERVICE_TYPE_DISPLAY_NAME"
+                },
+                "serviceCharacteristic":
+                {
+                    "description": "Contains service detail values such as Network Number SV_MAPPING:SERVICE_TRE_V.NETWORK_NAME and Status SV_MAPPING:SERVICE_TRE_V.SERVICE_STATUS_CODE. Also, spend limit information such as SPEND_LIMIT_ALLOCATION and SPEND_LIMIT_BALANCE values in account currency.",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    }
+                },
+                "serviceSpecification":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceSpecification"
+                    },
+                    "description": "The service specification implied by this candidate"
+                },
+                "entityList":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/EntityList"
+                    },
+                    "description": "Service DA lists with detail records in name/value pairs"
+                },
+                "relatedParty":
+                {
+                    "type": "array",
+                    "description": "Primary contact person for service associated with particular product instance. Derived via PRODUCT_INSTANCE_SERVICE and SERVICE_HISTORY. One product may have reference to sereral services, however, all services will link to single person. Considering this, for particular product instance, there will be only one element in relatedParty array. Structure of relatedParty is kept as an array for complience with OpenAPI.",
+                    "items":
+                    {
+                        "$ref": "#/definitions/RelatedParty"
+                    }
+                }
+            }
+        },
+        "ServiceSpecification":
+        {
+            "type": "object",
+            "description": "ServiceSpecification is a class that offers characteristics to describe a type of service.\nFunctionally, it acts as a template by which Services may be instantiated. By sharing the same  specification, these services would therefore share the same set of characteristics.",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of the service specification. SV_MAPPING:Spend Limit -> offerId-productId-entCatCode-productInstanceId"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the service specification. SV_MAPPING:Spend Limit -> offerName-companionName-entitlementCategory"
+                },
+                "serviceSpecCharacteristic":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceSpecCharacteristic"
+                    },
+                    "description": "A list of service spec characteristics (ServiceSpecCharacteristic [*]). This class represents the key features of this service specification."
+                }
+            }
+        },
+        "ServiceSpecCharacteristic":
+        {
+            "type": "object",
+            "description": "This class represents the key features of this service specification. For example, bandwidth is a characteristic of many different types of services; if bandwidth is a relevant characteristic (e.g., from the point-of-view of a Customer obtaining this Service via a Product) then bandwidth would be a ServiceSpecCharacteristic for that particular Service.",
+            "properties":
+            {
+                "name":
+                {
+                    "type": "string",
+                    "description": "A word, term, or phrase by which this characteristic specification is known and distinguished from other characteristic specifications. SV_MAPPING:Spend Limit -> Recurring Allocation Amount/Spend Limit Allocation/Spend Limit Available/Spend Limit Event Type/Spend Limit Event Sub Type/Spend Limit Time Band"
+                },
+                "serviceSpecCharRelationship":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceSpecCharRelationship"
+                    },
+                    "description": "A list of service spec char relationships (ServiceSpecCharRelationship [*]). An aggregation, migration, substitution, dependency or exclusivity relationship between/among Specification Characteristics. Note that the serviceSpecCharRelationship structure is currently not implemented."
+                },
+                "serviceSpecCharacteristicValue":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/ServiceSpecCharacteristicValue"
+                    },
+                    "description": "A list of service spec characteristic values (ServiceSpecCharacteristicValue [*]). A ServiceSpecCharacteristicValue object is used to define a set of attributes, each of which can be assigned to a corresponding set of attributes in a ServiceSpecCharacteristic object. The values of the attributes in the ServiceSpecCharacteristicValue object describe the values of the attributes that a corresponding ServiceSpecCharacteristic object can take on."
+                }
+            }
+        },
+        "ServiceSpecCharRelationship":
+        {
+            "type": "object",
+            "description": "An aggregation, migration, substitution, dependency or exclusivity relationship between/among serviceSpecCharacteristics. Note that the serviceSpecCharRelationship structure is currently not implemented.",
+            "properties":
+            {
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the target  characteristic. Note that the serviceSpecCharRelationship structure is currently not implemented."
+                },
+                "relationshipType":
+                {
+                    "type": "string",
+                    "description": "Type of relationship such as aggregation, migration, substitution, dependency, exclusivity. Spend Limit -> dependency. Note that the serviceSpecCharRelationship structure is currently not implemented."
+                }
+            }
+        },
+        "ServiceSpecCharacteristicValue":
+        {
+            "type": "object",
+            "description": "A ServiceSpecCharacteristicValue object is used to define a set of attributes, each of which can be assigned to a corresponding set of attributes in a ServiceSpecCharacteristic object. The values of the attributes in the ServiceSpecCharacteristicValue object describe the values of the attributes that a corresponding ServiceSpecCharacteristic object can take on.",
+            "properties":
+            {
+                "unitOfMeasure":
+                {
+                    "type": "string",
+                    "description": "A length, surface, volume, dry measure, liquid measure, money, weight, time, and the like. In general, a determinate quantity or magnitude of the kind designated, taken as a standard of comparison for others of the same kind, in assigning to them numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot. SV_MAPPING:Spend Limit -> Currency"
+                },
+                "value":
+                {
+                    "$ref": "#/definitions/Any",
+                    "description": "A discrete value that the characteristic can take on, or the actual value of the characteristic. SV_MAPPING:Spend Limit -> Entitlement Allocation, Initial/Available amount, Event Type/Event Sub Type/Time Band Eligibility"
+                }
+            }
+        },
+        "ProductPrice":
+        {
+            "type": "object",
+            "description": "An amount, usually of money, that represents the actual price paid by a Customer for a purchase, a rent or a lease of a Product. The price is valid for a defined period of time.",
+            "required": [
+                "price",
+                "priceType"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "unique id of this resource. Batch one-off -> offerId-productId-productInstanceId, Batch MRC -> offerId-productId-productInstanceId/offerId-productId-Intro-productInstanceId, Realtime one-off -> offerId-productId-productInstanceId/offerId-productId-entCatCode-productInstanceId, realtime periodic -> offerId-productId-productInstanceId/offerId-productId-entCatCode-productInstanceId/offerId-productId-Intro-productInstanceId/offerId-productId-entCatCode-Intro-productInstanceId"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch one-off -> offerName-Activation/offerName-Cancellation, Batch MRC -> offerName-Recurring/offerName-Introductory, Realtime one-off -> offerName-RealTime Activation/offerName-RealTime Activation-entitlementCategory/offerName-RealTime Cancellation, realtime periodic -> offerName-RealTime Periodic/offerName-RealTime Periodic-entitlementCategory/offerName-Introductory/offerName-entitlementCategory-Introductory"
+                },
+                "description":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch MRC and one-off -> Invoice text from respective offer DA table, Realtime one-off and periodic -> invoiceText/invoiceText - Category : entitlementCategory"
+                },
+                "priceType":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch one-off -> Activation/Cancellation, Batch MRC -> Recurring/Discount, Realtime One-off -> RealTime Activation/RealTime Cancellation, Realtime Periodic -> RealTime Periodic/Discount, Usage -> Price Type from Product Offering Price DA"
+                },
+                "recurringChargePeriod":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch MRC -> recurring charge period from recurring tariff"
+                },
+                "unitOfMeasure":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch MRC -> recurring charge unit code from recurring tariff"
+                },
+                "price":
+                {
+                    "$ref": "#/definitions/Price",
+                    "description": "The amount of money that characterizes the price."
+                },
+                "productPriceAlteration":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/PriceAlteration"
+                    }
+                }
+            }
+        },
+        "Price":
+        {
+            "type": "object",
+            "description": "Provides all amounts (tax included, duty free, tax rate), used currency and percentage to apply for Price Alteration.",
+            "properties":
+            {
+                "percentage":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Percentage to apply for ProdOfferPriceAlteration"
+                },
+                "taxRate":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Tax percentage. SV_MAPPING:tax.vat.dTaxRate->Tax"
+                },
+                "dutyFreeAmount":
+                {
+                    "$ref": "#/definitions/Money",
+                    "description": "All taxes excluded amount (expressed in the given currency)"
+                },
+                "taxIncludedAmount":
+                {
+                    "$ref": "#/definitions/Money",
+                    "description": "All taxes included amount (expressed in the given currency)"
+                }
+            }
+        },
+        "PriceAlteration":
+        {
+            "type": "object",
+            "description": "Is an amount, usually of money, that modifies the price charged for an order item.",
+            "required": [
+                "price",
+                "priceType"
+            ],
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "unique id of this resource. Batch one-off -> offerId-productId, Batch MRC -> offerId-productId/offerId-productId-Intro, Realtime one-off -> offerId-productId/offerId-productId-entCatCode, realtime periodic -> offerId-productId/offerId-productId-entCatCode/offerId-productId-Intro/offerId-productId-entCatCode-Intro, Usage -> offeringPriceCode-eventTypeCode-eventSubTypeCode-timeBand"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "Name of the order item price alteration"
+                },
+                "description":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch MRC and one-off -> Discount Invoice Text of the product instance, Realtime one-off and periodic -> invoiceText/invoiceText - Category : entitlementCategory"
+                },
+                "priceType":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Batch one-off -> Cancellation, Batch MRC -> Discount, Realtime One-off -> RealTime Cancellation, Realtime Periodic -> RealTime Discount, Usage -> Price Type from Product Offering Price DA"
+                },
+                "recurringChargePeriod":
+                {
+                    "type": "string",
+                    "description": "Could be month, week..."
+                },
+                "unitOfMeasure":
+                {
+                    "type": "string",
+                    "description": "Could be minutes, GB..."
+                },
+                "price":
+                {
+                    "$ref": "#/definitions/Price"
+                }
+            }
+        },
+        "Money":
+        {
+            "type": "object",
+            "description": "A base / value business entity used to represent money",
+            "properties":
+            {
+                "unit":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:Currency Symbol"
+                },
+                "value":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "description": "SV_MAPPING:Batch MRC, batch one-off, realtime one-off and realtime periodic -> Charge from respective offer DA table, Usage -> rate from component price book DA, Introductory discount(fixed) for Batch MRC and realtime periodic -> introductory discount from respective offer DA"
+                }
+            }
+        },
+        "SummaryOfChange":
+        {
+            "type": "object",
+            "description": "Summary of change",
+            "properties":
+            {
+                "record":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    },
+                    "description": "Record field in name/pair values, supported fields are SV_MAPPING:EFFECTIVE_START_DATE, EFFECTIVE_END_DATE, LAST_MODIFIED, ATLANTA_OPERATOR_ID and CHANGE_HISTORY_TEXT"
+                }
+            }
+        },
+        "UsageConsumption":
+        {
+            "type": "object",
+            "description": "Entitlement consumption details the balances and the allocations at any give point in time.",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:ENTITLEMENT_TRE_V.ENTITLEMENT_ID"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING:ENTITLEMENT_TRE_V.ENTITLEMENT_NAME"
+                },
+                "entitlementCharacteristic":
+                {
+                    "description": "The list of entitlement characteristic fields. SV_MAPPING:ENTITLEMENT_TRE_V fields such as ENTITLEMENT_TYPE_NAME, ENTITLEMENT_CATEGORY_CODE, ENTITLEMENT_CLASS_CODE, START_DATE, EXPIRY_DATE and NEXT_ALLOCATION_DATE. ENTITLEMENT_OFFER_CATEGORY is derived from DA perestapi.dEntOfferCategory",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    }
+                },
+                "allocationConsumption":
+                {
+                    "description": "The list of entitlement allocation and consumption details",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Bucket"
+                    }
+                },
+                "totalAllocation":
+                {
+                    "description": "The sum of initial quality",
+                    "$ref": "#/definitions/Quantity"
+                },
+                "totalBalance":
+                {
+                    "description": "The sum of balance quality",
+                    "$ref": "#/definitions/Quantity"
+                }
+            }
+        },
+        "Bucket":
+        {
+            "type": "object",
+            "description": "Describes allocation consumption details",
+            "properties":
+            {
+                "initialQuantity":
+                {
+                    "description": "SV_MAPPING:ENTITLEMENT_ALLOCATION_TRE_V.INITIAL_AMOUNT",
+                    "$ref": "#/definitions/Quantity"
+                },
+                "balanceQuantity":
+                {
+                    "description": "SV_MAPPING:ENTITLEMENT_ALLOCATION_TRE_V.CONSUMED_AMOUNT",
+                    "$ref": "#/definitions/Quantity"
+                },
+                "consumptionPeriod":
+                {
+                    "description": "It is from SV_MAPPING:ENTITLEMENT_ALLOCATION_TRE_V.START_DATE to SV_MAPPING:ENTITLEMENT_ALLOCATION_TRE_V.EXPIRY_DATE",
+                    "$ref": "#/definitions/TimePeriod"
+                }
+            }
+        },
+        "TimePeriod":
+        {
+            "type": "object",
+            "description": "A period of time, either as a deadline (endDateTime only) a startDateTime only, or both",
+            "properties":
+            {
+                "endDateTime":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End of the time period. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "startDateTime":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start of the time period. Format: yyyy-mm-ddThh:nn:ss"
+                }
+            }
+        },
+        "EntityList":
+        {
+            "type": "object",
+            "description": "Describes entity derived attribute (DA) table",
+            "required": [
+                "name",
+                "records"
+            ],
+            "properties":
+            {
+                "name":
+                {
+                    "type": "string",
+                    "description": "Entity derived attribute table name"
+                },
+                "records":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/EntityRecord"
+                    },
+                    "description": "Entity table records"
+                }
+            }
+        },
+        "RelatedParty":
+        {
+            "type": "object",
+            "description": "Party reference. Primary contact person (individual) for this product",
+            "required": [
+                "id",
+                "role"
+            ],
+            "properties":
+            {
+                "@referredType":
+                {
+                    "type": "string",
+                    "description": "This is type of related party which it reffers. Always individual. SV_MAPPING: perestapi.REFERRED_TYPE",
+                    "x-refdata-source": "RT-perestapi.REFERRED_TYPE"
+                },
+                "id":
+                {
+                    "type": "string",
+                    "description": "Person Id, SV_MAPPING: PERSON_TRE_V.PERSON_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Reference of the party - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Party TreREST URL>/<person_id>"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "Person official name. SV_MAPPING: PERSON_TRE_V.OFFICIAL_NAME"
+                },
+                "role":
+                {
+                    "type": "string",
+                    "description": "Primary. SV_MAPPING: perestapi.RELATED_PARTY_ROLE",
+                    "x-refdata-source": "RT-perestapi.RELATED_PARTY_ROLE"
+                }
+            }
+        },
+        "EntityRecord":
+        {
+            "type": "object",
+            "description": "Describes the entity table record fields",
+            "required": [
+                "characteristics"
+            ],
+            "properties":
+            {
+                "entityRecordCharacteristics":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/Characteristic"
+                    },
+                    "description": "Record field in name/pair values"
+                }
+            }
+        },
+        "PaginationRef":
+        {
+            "type": "object",
+            "description": "Query results and paging details.",
+            "required": [
+                "offset",
+                "limit",
+                "remainingRecords",
+                "totalRecords",
+                "scn"
+            ],
+            "properties":
+            {
+                "offset":
+                {
+                    "type": "integer",
+                    "description": "Requested index for start of items to be provided in response"
+                },
+                "limit":
+                {
+                    "type": "integer",
+                    "description": "Requested number of items to be provided in response"
+                },
+                "remainingRecords":
+                {
+                    "type": "integer",
+                    "description": "Remaining number of items to be fetched"
+                },
+                "totalRecords":
+                {
+                    "type": "integer",
+                    "description": "Total number of items matching criteria"
+                },
+                "scn":
+                {
+                    "type": "string",
+                    "description": "Oracle system change number for read consistency"
+                }
+            }
+        },
+        "Error":
+        {
+            "description": "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)",
+            "type": "object",
+            "required": [
+                "code",
+                "reason"
+            ],
+            "properties":
+            {
+                "code":
+                {
+                    "type": "string",
+                    "description": "Application relevant detail, defined in the API or a common list."
+                },
+                "reason":
+                {
+                    "type": "string",
+                    "description": "Explanation of the reason for the error which can be shown to a client user."
+                },
+                "message":
+                {
+                    "type": "string",
+                    "description": "More details and corrective actions related to the error which can be shown to a client user."
+                },
+                "status":
+                {
+                    "type": "string",
+                    "description": "HTTP Error code extension"
+                },
+                "referenceError":
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URI of documentation describing the error."
+                },
+                "@baseType":
+                {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the super-class."
+                },
+                "@schemaLocation":
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name."
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,588 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Payment",
+        "description": "This is the Swagger specification for Payment Management",
+        "version": "$Revision: 1.10 $"
+    },
+    "host": "sinlxsves19.csgicorp.com:50137",
+    "basePath": "/perest/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json;charset=utf-8"
+    ],
+    "produces": [
+        "application/json;charset=utf-8"
+    ],
+    "tags": [
+        {
+            "name": "payment"
+        }
+    ],
+    "paths": {
+        "/payment": {
+            "post": {
+                "operationId": "createPayment",
+                "summary": "Creates a Payment",
+                "description": "This operation creates a Payment entity.",
+                "tags": [
+                    "payment"
+                ],
+                "parameters": [
+                    {
+                        "name": "payment",
+                        "description": "The Payment to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Payment_Create"
+                        },
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/Payment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/payment/{id}": {
+            "get": {
+                "operationId": "retrievePayment",
+                "summary": "Retrieves a Payment by ID",
+                "description": "This operation retrieves a Payment entity. Attribute selection is enabled for all first level attributes.",
+                "tags": [
+                    "payment"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Identifier of the Payment. SV_MAPPING: PayReqst.PayRecNo_X",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Payment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/refund": {
+            "post": {
+                "operationId": "createRefund",
+                "summary": "Creates a Refund",
+                "description": "This operation creates a refund entity.",
+                "tags": [
+                    "refund"
+                ],
+                "parameters": [
+                    {
+                        "name": "refund",
+                        "description": "The Refund to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Refund_Create"
+                        },
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/Refund"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AccountRef": {
+            "type": "object",
+            "description": "Account reference. A account may be a party account or a financial account.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of the account. SV_MAPPING: PayReqst.ToCustAcctNum_X"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "BankCardType": {
+            "type": "object",
+            "description": "Details of Credit Card",
+            "required": [
+                "brand",
+                "cardNumber",
+                "expirationDate"
+            ],
+            "properties": {
+                "brand": {
+                    "type": "string",
+                    "description": "Card type. SV_MAPPING: PayReqst.CardType_R"
+                },
+                "cardNumber": {
+                    "type": "string",
+                    "description": "Card number. SV_MAPPING: PayReqst.CreditCardLastNo_X"
+                },
+                "expirationDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Expiry Date. SV_MAPPING: PayReqst.CardExpyDate_X"
+                },
+                "nameOnCard": {
+                    "type": "string",
+                    "description": "Name on Card. SV_MAPPING: PayReqst.UI_CreditCardHolderName_X"
+                }
+            }
+        },
+        "CaseRef": {
+            "type": "object",
+            "description": "The Case data structure",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Identifier of the case"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Reference of the case"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of case"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The Status of case. Possible Values New|Open|Closed"
+                }
+            }
+        },
+        "ChannelRef": {
+            "type": "object",
+            "description": "The channel to which the resource reference to. e.g. channel for selling product offerings, channel for opening a trouble ticket etc..",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the channel. SV_MAPPING: PayReqst.PayLoc_R"
+                }
+            }
+        },
+        "EntityRef": {
+            "type": "object",
+            "description": "Entity reference schema to be use for all entityRef class.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of a related entity. SV_MAPPING: PayReqst.CustInvStr_X | PayReqst.CustAdjStr_X"
+                },
+                "@referredType": {
+                    "type": "string",
+                    "description": "The actual type of the target instance when needed for disambiguation. Possible Values invoice | adjustment from perestapi.REFERRED_TYPE RT"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "Money": {
+            "type": "object",
+            "description": "A base / value business entity used to represent money",
+            "properties": {
+                "unit": {
+                    "type": "string",
+                    "description": "Currency (ISO4217 norm uses 3 letters to define the currency). SV_MAPPING: PayReqst.PayCurrency_R"
+                },
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "A positive floating point number. SV_MAPPING: PayReqst.TotalPayAmt_C"
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "Payment": {
+            "type": "object",
+            "description": "The Payment resource represents a performed payment. It contains both information about the payment and the payment method used to perform it.",
+            "required": [
+                "account",
+                "paymentMethod"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of Payment. SV_MAPPING: PayReqst.PayRecNo_X"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Hypertext Reference of the Payment - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Payment PEREST URL>/<PayReqst.PayRecNo_X>"
+                },
+                "paymentDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date when the payment was performed. SV_MAPPING: PayReqst.PayRecDate_T"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Status of the payment. SV_MAPPING: PayReqst.CBPayStatus_R"
+                },
+                "account": {
+                    "$ref": "#/definitions/AccountRef"
+                },
+                "case": {
+                    "$ref": "#/definitions/CaseRef"
+                },
+                "channel": {
+                    "$ref": "#/definitions/ChannelRef"
+                },
+                "paymentItem": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PaymentItem"
+                    }
+                },
+                "paymentMethod": {
+                    "$ref": "#/definitions/PaymentMethodRefOrValue"
+                },
+                "totalAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Amount to be paid (including taxes)"
+                }
+            }
+        },
+        "Payment_Create": {
+            "type": "object",
+            "description": "The Payment resource represents a performed payment. It contains both information about the payment and the payment method used to perform it.\nSkipped properties: id,href,status,statusDate,paymentDate",
+            "required": [
+                "account",
+                "paymentMethod",
+                "totalAmount"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of Payment. SV_MAPPING: PayReqst.PayRecNo_X"
+                },
+                "paymentDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date when the payment was performed. SV_MAPPING: PayReqst.PayRecDate_T"
+                },
+                "account": {
+                    "$ref": "#/definitions/AccountRef"
+                },
+                "case": {
+                    "$ref": "#/definitions/CaseRef",
+                    "description": "Case details"
+                },
+                "channel": {
+                    "$ref": "#/definitions/ChannelRef"
+                },
+                "paymentItem": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PaymentItem"
+                    }
+                },
+                "paymentMethod": {
+                    "$ref": "#/definitions/PaymentMethodRefOrValue"
+                },
+                "totalAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Amount to be paid (including taxes)"
+                }
+            }
+        },
+        "PaymentItem": {
+            "type": "object",
+            "description": "The paymentItem is the result of lettering process. It enables to assign automatically or manually part of incoming payment amount to a bill",
+            "required": [
+                "item"
+            ],
+            "properties": {
+                "amount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Amount to be paid (net of taxes)"
+                },
+                "item": {
+                    "$ref": "#/definitions/EntityRef"
+                }
+            }
+        },
+        "PaymentMethodRefOrValue": {
+            "type": "object",
+            "description": "link to the resource that holds information about the payment mean used to complete the operation",
+            "properties": {
+                "details": {
+                    "type": "object",
+                    "description": "Details of the payment method. bankCard -> BankCardType",
+                    "$ref": "#/definitions/BankCardType"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name. Possible Values cash | bankCard. SV_MAPPING: RT perestapi.PAYMENT_TYPE -> Abbreviation"
+                }
+            }
+        },
+        "PaymentRef": {
+            "type": "object",
+            "description": "If an imeediate payment has been done at the product order submission, the payment information are captured and stored (as a reference) in the order.",
+            "required":	[
+               "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of Payment. SV_MAPPING: PayReqst.PayRecNo_X"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Hypertext Reference of the Payment - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Payment PEREST URL>/<PayReqst.PayRecNo_X>"
+                }
+            }
+        },
+        "Refund": {
+            "type": "object",
+            "description": "The Refund resource represents a performed Refund. It contains both information about the refund and the payment method used to perform it.",
+            "required": [
+                "id",
+                "account",
+                "paymentMethod"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of Refund. SV_MAPPING: PayReqst.PayRecNo_X"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Hypertext Reference of the refund - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<Refund PEREST URL>/<PayReqst.PayRecNo_X>"
+                },
+                "refundDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date when the refund was performed. SV_MAPPING: PayReqst.RejectDate_T"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Status of the refund. SV_MAPPING: PayReqst.UpdatePayReqstType_R"
+                },
+                "account": {
+                    "$ref": "#/definitions/AccountRef"
+                },
+                "channel": {
+                    "$ref": "#/definitions/ChannelRef"
+                },
+                "paymentMethod": {
+                    "$ref": "#/definitions/PaymentMethodRefOrValue"
+                },
+                "totalAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Amount to be paid (including taxes)"
+                }
+            }
+        },
+        "Refund_Create": {
+            "type": "object",
+            "description": "The Refund resource represents a performed Refund. It contains both information about the refund and the payment method used to perform it.",
+            "required": [
+                "payment",
+                "refundReason"
+            ],
+            "properties": {
+                "payment": {
+                    "$ref": "#/definitions/PaymentRef"
+                },
+                "refundReason": {
+                    "type": "string",
+                    "description": "Text describing the contents of the refund. SV_MAPPING: PayReqst.RejectReason_R"
+                },
+                "refundDate": {
+                    "type": "date-time",
+                    "description": "Date when the refund was performed. SV_MAPPING: PayReqst.RejectDate_T"
+                }
+            }
+        },
+        "Error": {
+            "description": "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)",
+            "type": "object",
+            "required": [
+                "code",
+                "reason"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Application relevant detail, defined in the API or a common list."
+                },
+                "reason": {
+                    "type": "string",
+                    "description": "Explanation of the reason for the error which can be shown to a client user."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "More details and corrective actions related to the error which can be shown to a client user."
+                },
+                "status": {
+                    "type": "string",
+                    "description": "HTTP Error code extension"
+                },
+                "referenceError": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URI of documentation describing the error."
+                },
+                "@baseType": {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the super-class."
+                },
+                "@schemaLocation": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name."
+                }
+            }
+        }
+    }
+}

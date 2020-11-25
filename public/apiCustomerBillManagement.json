@@ -1,0 +1,1140 @@
+{
+    "swagger": "2.0",
+    "info":
+    {
+        "title": "Customer Bill Management",
+        "description": "This is Swagger UI environment generated for the TMF Customer Bill Management specification",
+        "version": "$Revision: 1.13 $"
+    },
+    "host": "sinlxsves19.csgicorp.com:50137",
+    "basePath": "/perest/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json;charset=utf-8"
+    ],
+    "produces": [
+        "application/json;charset=utf-8"
+    ],
+    "tags": [
+        {
+            "name": "customerBill"
+        },
+        {
+            "name": "appliedCustomerBillingRate"
+        }		
+    ],
+    "paths":
+    {
+        "/customerBill": 
+		{
+            "get": {
+                "operationId": "listCustomerBill",
+                "summary": "List or find CustomerBill objects",
+                "description": "This operation list or find CustomerBill entities",
+                "tags": [
+                    "customerBill"
+                ],
+                "parameters": [
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to be provided in response",
+                        "required": false,
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "startDate",
+                        "description": "To retrieve the customer bills with SV_MAPPING: INVOICE_TRE_V.EFFECTIVE_DATE is on/after start date. Format: yyyy-mm-ddThh:nn:ss",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "endDate",
+                        "description": "To retrieve the customer bills with SV_MAPPING: INVOICE_TRE_V.EFFECTIVE_DATE is on/before end date. Format: yyyy-mm-ddThh:nn:ss",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "serviceName",
+                        "description": "To retrieve the customer bills by service name or mobile number - SV_MAPPING: SERVICE_HISTORY_V.SERVICE_NAME",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "accountName",
+                        "description": "To retrieve the customer bills by account name - SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_NAME",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "customerName",
+                        "description": "To retrieve the customer bills by node name - SV_MAPPING: CUSTOMER_NODE_TRE_V.NODE_NAME",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    },  
+                    {
+                        "name": "billNo",
+                        "description": "Identifier of the CustomerBill known by the customer or party. SV_MAPPING:INVOICE_TRE_V.CUSTOMER_INVOICE_STR",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    },      
+                    {
+                        "name": "accountId",
+                        "description": "To retrieve the customer bills by account id - SV_MAPPING: ACCOUNT_TRE_V.ACCOUNT_ID",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "customerNodeId",
+                        "description": "To retrieve the customer bills by customer node id - SV_MAPPING: CUSTOMER_NODE_TRE_V.CUSTOMER_NODE_ID",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    },              
+                    {
+                        "name": "type",
+                        "description": "Filters results based on type. Supported values: 'Invoice' or 'Statement'",
+                        "required": false,
+                        "in": "query",
+                        "type": "string",
+                        "format": "string"
+                    }, 
+                    {
+                        "name": "offset",
+                        "description": "Requested index for start of resources to be provided in response",
+                        "required": false,
+                        "in": "query",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "description": "Requested number of resources to be provided in response",
+                        "required": false,
+                        "in": "query",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "scn",
+                        "description": "Oracle system change number used for data read consistency. Default to emtpy string if configuration item SV_MAPPING: API_CONFIGURATION1.USE_FLASHBACK is not ON",
+                        "required": false,
+                        "in": "query",
+                        "type": "string"
+                    }                   
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "headers": {
+                            "X-Result-Count": {
+                                "description": "Actual number of items returned in the response body",
+                                "type": "integer"
+                            },
+                            "X-Total-Count": {
+                                "description": "Total number of items matching criteria",
+                                "type": "integer"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/CustomerBill_List"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customerBill/{id}": 
+        {
+            "get": {
+                "operationId": "retrieveCustomerBill",
+                "summary": "Retrieves a CustomerBill by ID",
+                "description": "This operation retrieves a CustomerBill entity. Attribute selection is enabled for all first level attributes.",
+                "tags": [
+                    "customerBill"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Identifier of the CustomerBill. SV_MAPPING:INVOICE_TRE_V.CUSTOMER_INVOICE_STR",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CustomerBill"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/appliedCustomerBillingRate/{id}": 
+		{
+            "get": 
+			{
+                "operationId": "retrieveAppliedCustomerBillingRate",
+                "summary": "Retrieves a AppliedCustomerBillingRate by ID",
+                "description": "This operation retrieves a AppliedCustomerBillingRate entity.",
+                "tags": [
+                    "appliedCustomerBillingRate"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Identifier of the AppliedCustomerBillingRate. SV_MAPPING: CHARGE.CHARGE_ID",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    },
+                    {
+                        "name": "fields",
+                        "description": "Comma-separated properties to provide in response",
+                        "required": false,
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "responses": 
+				{
+                    "200": 
+					{
+                        "description": "Success",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/AppliedCustomerBillingRate"
+                        }
+                    },
+                    "400": 
+					{
+                        "description": "Bad Request",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": 
+					{
+                        "description": "Unauthorized",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": 
+					{
+                        "description": "Forbidden",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": 
+					{
+                        "description": "Not Found",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not allowed",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": 
+					{
+                        "description": "Conflict",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": 
+					{
+                        "description": "Internal Server Error",
+                        "schema": 
+						{
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }		
+    },
+    "definitions": 
+	{
+        "AppliedBillingRateCharacteristic": 
+		{
+            "type": "object",
+            "description": "An applied billing rate has dynamic characteristics according to the its type (characteristics are based on the service type, line of business or on others parameters)",
+            "required": [
+                "name",
+                "value"
+            ],
+            "properties": 
+			{
+                "name": 
+				{
+                    "type": "string",
+                    "description": "Name of the characteristic"
+                },
+                "valueType": 
+				{
+                    "type": "string",
+                    "description": "Data type of the value of the characteristic"
+                },
+                "value": 
+				{
+                    "$ref": "#/definitions/Any",
+                    "description": "The value of the characteristic"
+                }
+            }
+        },
+        "AppliedBillingTaxRate": 
+		{
+            "type": "object",
+            "description": "The applied billing tax rate represents taxes applied billing rate it refers to.",
+            "properties": 
+			{
+                "taxRate": 
+				{
+                    "type": "number",
+                    "format": "float",
+                    "description": "Applied rate. SV_MAPPING: Derive based on CHARGE.CHARGE and taxAmount."
+                },
+                "taxAmount": 
+				{
+                    "$ref": "#/definitions/Money",
+                    "description": "Tax amount expressed in the given currency. SV_MAPPING: Decode(SV_MAPPING: CHARGE.GENERAL_17) to derived TAX_AMT."
+                }
+            }
+        },
+        "AppliedCustomerBillingRate": 
+		{
+            "type": "object",
+            "description": "A customer bill displays applied billing rates created before or during the billing process.",
+            "required": [
+                "id"
+            ],
+            "properties": 
+			{
+                "id": 
+				{
+                    "type": "string",
+                    "description": "Unique identifier of the customer applied billing rate. SV_MAPPING: CHARGE.CHARGE_ID"
+                },
+                "href": 
+				{
+                    "type": "string",
+                    "description": "Reference of the customer applied billing rate - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<AppliedCustomerBillingRate PEREST URL>/<SV_MAPPING: CHARGE.CHARGE_ID>"
+                },
+                "date": 
+				{
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Creation date of the applied billing rate, format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: CHARGE.CHARGE_DATE"
+                },
+                "isBilled": 
+				{
+                    "type": "boolean",
+                    "description": "If isBilled = true then bill should be provided, if false then billingAccount should be provided. SV_MAPPING: CHARGE.UNINVOICED_IND_CODE (BOOLEAN RT)"
+                },
+                "name": 
+				{
+                    "type": "string",
+                    "description": "Name of the customer applied billing rate. SV_MAPPING: CHARGE.INVOICE_TXT"
+                },
+                "type": 
+				{
+                    "type": "string",
+                    "description": "Type of the applied billing rate. SV_MAPPING: CHARGE.EVENT_CLASS_CODE (EVENT_CLASS RT)"
+                },
+                "appliedTax": 
+				{
+                    "type": "array",
+                    "items": 
+					{
+                        "$ref": "#/definitions/AppliedBillingTaxRate"
+                    }
+                },
+                "bill": 
+				{
+                    "$ref": "#/definitions/BillRef"
+                },
+                "billingAccount": 
+				{
+                    "$ref": "#/definitions/BillingAccountRef"
+                },
+                "characteristic": 
+				{
+                    "type": "array",
+                    "description": "Characteristic name supported: ServiceName | ServiceContact | ProductOffer. Characteristic value supported: SV_MAPPING: SERVICE_TRE_V.SERVICE_NAME, PERSON_HISTORY.OFFICIAL_NAME, PRODUCT_OFFER.PRODUCT_OFFER_DISPLAY_NAME. Characteristic value type supported: string.",					
+                    "items": 
+					{
+                        "$ref": "#/definitions/AppliedBillingRateCharacteristic"
+                    }
+                },
+                "periodCoverage": 
+				{
+                    "$ref": "#/definitions/TimePeriod",
+                    "description": "periodCoverage for RecurringCharge (RC) indicating the RC coverage period dates for different purposes, for NRC and Usage start and end date will be the same. Format: yyyy-mm-ddThh:nn:ss. SV_MAPPING: (CHARGE.PERIOD_START_DATE, CHARGE.PERIOD_END_DATE) for MRC / NRC, CHARGE.CHARGE_DATE for usage charge"
+                },
+                "taxExcludedAmount": 
+				{
+					"description": "Charge amount which has excluded the tax amount. SV_MAPPING: CHARGE.CHARGE",
+                    "$ref": "#/definitions/Money"
+                },
+                "taxIncludedAmount": 
+				{
+					"description": "Charge amount which has included the tax amount. SV_MAPPING: CHARGE.CHARGE + Decode(CHARGE.GENERAL_17)",
+                    "$ref": "#/definitions/Money"
+                }
+            }
+        },	
+        "BillRef": 
+		{
+            "type": "object",
+            "description": "Bill reference.",
+            "properties": 
+			{
+                "id": 
+				{
+                    "type": "string",
+                    "description": "Unique-Identifier for customer bill. SV_MAPPING: CHARGE.CUSTOMER_INVOICE_STR"
+                },
+                "href": 
+				{
+                    "type": "string",
+                    "description": "URL Reference of the customer bill - <http://<PEREST_HOSTNAME>:<PEREST_PORT>/<customerBill PEREST URL>/<SV_MAPPING: CHARGE.CUSTOMER_INVOICE_STR>"
+                },
+                "@referredType": 
+				{
+                    "type": "string",
+                    "description": "The actual type of the target instance when needed for disambiguation. SV_MAPPING: perestapi.REFERRED_TYPE->customerBill RT"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "BillingCharacteristic": 
+        {
+            "type": "object",
+            "description": "Describes a additional characteristic of an object or entity through a name/value pair. For example, Characteristic are used to map Previous Balance value from INVOICE_TRE_V.BALANCE_FORWARD",
+            "required": [
+                "name",
+                "value"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the characteristic. For example, Previous Balance"
+                },
+                "valueType": {
+                    "type": "string",
+                    "description": "Data type of the value of the characteristic. For Previous Balance - number"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The value of the characteristic. For Previous Balance - SV MAPPING INVOICE_TRE_V.BALANCE_FORWARD"
+                },
+                "unit":
+                {
+                    "type": "string",
+                    "description": "For Previous Balance - SV_MAPPING: CURRENCY_TRE_V.CURRENCY_SYMBOL"
+                }
+            }
+        }, 
+        "CustomerBill":
+        {
+            "type": "object",
+            "description": "The billing account receives all charges (recurring, one time and usage) of the offers and products assigned to it during order process. Periodically according to billing cycle specifications attached to the billing account or as a result of an event, a customer bill (aka invoice) is produced. This customer bill concerns different related parties which play a role on it : for example, a customer bill is produced by an operator, is sent to a bill receiver and has to be paid by a payer.\nA payment method could be assigned to the customer bill to build the call of payment. Lettering process enables to assign automatically or manually incoming amount from payments to customer bills (payment items).\nA tax item is created for each tax rate used in the customer bill.\nThe financial account represents a financial entity which records all customer\u2019s accounting events : payment amount are recorded as credit and invoices amount are recorded as debit. It gives the customer overall balance (account balance).\nThe customer bill is linked to one or more documents that can be downloaded via a provided url.",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier of the bill. SV_MAPPING:INVOICE_TRE_V.INVOICE_ID"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Hyperlink to customer bill (invoice). <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<customerBill PEREST URL>/INVOICE_ID"
+                },
+                "billDate":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Bill date. SV_MAPPING:INVOICE_TRE_V.EFFECTIVE_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "billNo": {
+                    "type": "string",
+                    "description": "Bill reference known by the customer or the party and displayed on the bill. Could be different from the id. SV_MAPPING:INVOICE_TRE_V.CUSTOMER_INVOICE_STR"
+                },
+                "category":
+                {
+                    "type": "string",
+                    "description": "Category of the bill produced : normal or interim. SV MAPPING: RT perestapi.CUSTOMER_BILL_CATEGORY. Whether bill run is interim or not, defined by referencing billing configuration (TASK_QUEUE.GENERAL_2) on creation task that fired bill run"
+                },
+                "lastUpdate":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date of bill last update. SV_MAPPING: INVOICE_TRE_V.LAST_MODIFIED. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "nextBillDate":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date of the next bill production. SV_MAPPING: TASK_TRE_V.SCHEDULED_START_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "paymentDueDate":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date at which the amount due should have been paid. SV_MAPPING:INVOICE_TRE_V.PAYMENT_DUE_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "runType":
+                {
+                    "type": "string",
+                    "description": "onCycle (a bill can be created as a result of a cycle run) or offCycle (a bill can be created as a result of other events such as customer request or account close) SV MAPPING: RT perestapi.CUSTOMER_BILL_RUN_TYPE"
+                },
+                "amountDue":
+                {
+                    "$ref": "#/definitions/Money",
+                    "description": "SV_MAPPING: INVOICE_TRE_V.INVOICE_AMOUNT or INVOICE_TRE_V.STATEMENT_AMOUNT"
+                },
+                "appliedPayment":
+                {
+                    "type": "array",                                       
+                    "items":
+                    {
+                        "$ref": "#/definitions/AppliedPayment"
+                    }
+                },
+                "appliedAdjustment":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/AppliedAdjustment"
+                    }
+                },              
+                "billDocument":
+                {
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/AttachmentRefOrValue"
+                    }
+                },
+                "billingAccount":
+                {
+                    "$ref": "#/definitions/BillingAccountRef"
+                },
+                "billingPeriod":
+                {
+                    "$ref": "#/definitions/TimePeriod"
+                },
+                "characteristics":
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BillingCharacteristic"
+                    }
+                },
+                "paymentMethod":
+                {
+                    "$ref": "#/definitions/PaymentMethodRef",
+                    "description": "SV_MAPPING: CUSTOMER_NODE_TRE_V.PAYMENT_METHOD_CODE"
+                },          
+                "remainingAmount":
+                {
+                    "$ref": "#/definitions/Money",
+                    "description": "SV_MAPPING: INVOICE_TRE_V.CURRENT_DUE"
+                },
+                "taxItem": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TaxItem"
+                    }
+                },
+                "invoiceAddress": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InvoiceAddress"
+                    }
+                },
+                "state":
+                {
+                    "$ref": "#/definitions/stateValue"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "SV_MAPPING: 'Invoice' if INVOICE_TRE_V.INVOICE_AMOUNT is not null, or 'Statement' if if INVOICE_TRE_V.STATEMENT_AMOUNT is not null"
+                }
+            }
+        },
+        "CustomerBill_List":
+        {
+            "type": "object",
+            "description": "Customer Bill List",
+            "required": [
+                "pagination"
+            ],
+            "properties":
+            {
+                "pagination":
+                {
+                    "description": "Query results and paging details.",
+                    "$ref": "#/definitions/PaginationRef"
+                },
+                "customersBills":
+                {
+                    "description": "Describes the list of customers bill with details",
+                    "type": "array",
+                    "items":
+                    {
+                        "$ref": "#/definitions/CustomerBill"
+                    }
+                }
+            }
+        },
+        "PaginationRef":
+        {
+            "type": "object",
+            "description": "Query results and paging details.",
+            "required": [
+                "offset",
+                "limit",
+                "remainingRecords",
+                "totalRecords",
+                "scn"
+            ],
+            "properties":
+            {
+                "offset":
+                {
+                    "type": "integer",
+                    "description": "Requested index for start of items to be provided in response"
+                },
+                "limit":
+                {
+                    "type": "integer",
+                    "description": "Requested number of items to be provided in response"
+                },
+                "remainingRecords":
+                {
+                    "type": "integer",
+                    "description": "Remaining number of items to be fetched"
+                },
+                "totalRecords":
+                {
+                    "type": "integer",
+                    "description": "Total number of items matching criteria"
+                },
+                "scn":
+                {
+                    "type": "string",
+                    "description": "Oracle system change number for read consistency"
+                }
+            }
+        },      
+        "AppliedAdjustment":
+        {
+            "type": "object",
+            "description": "The applied adjustment is the result of lettering process. It enables to assign automatically or manually part of incoming ajustment amount to a bill.",
+            "properties":
+            {
+                "appliedAmount":
+                {
+                    "$ref": "#/definitions/Money"
+                },
+                "adjustment":
+                {
+                    "$ref": "#/definitions/AdjustmentRef"
+                }
+            }
+        },
+        "AppliedPayment":
+        {
+            "type": "object",
+            "description": "The applied payment is the result of lettering process. It enables to assign automatically or manually part of incoming payment amount to a bill.",
+            "properties":
+            {
+                "appliedAmount":
+                {
+                    "$ref": "#/definitions/Money"
+                },
+                "payment":
+                {
+                    "$ref": "#/definitions/PaymentRef"
+                }
+            }
+        },
+        "AdjustmentRef":
+        {
+            "type": "object",
+            "description": "Adjustment reference",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING: ADJUSTMENT_TRE_V.ADJUSTMENT_ID"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Hyperlink to the related Adjustment entity. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<Adjustment PEREST URL>/ADJUSTMENT_ID"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "SV_MAPPING: ADJUSTMENT_TRE_V.ADJUSTMENT_NR"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "SV_MAPPING: ADJUSTMENT_TRE_V.ADJUSTMENT_TYPE_DISPLAY_NAME"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },  
+        "AttachmentRefOrValue":
+        {
+            "type": "object",
+            "description": "An attachment by value or by reference. For AttachmentRefOrValue, the attribute type,schemaLocation and referredType are related to the contained entity and not to AttchmentRefOrValue itself",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique identifier for this particular attachment. SV_MAPPING: INVOICE_TRE_V.CUSTOMER_INVOICE_STR"
+                },
+                "attachmentType":
+                {
+                    "type": "string",
+                    "description": "Default to invoice"
+                },
+                "content":
+                {
+                    "type": "string",
+                    "description": "The actual contents of the attachment object, if embedded, encoded as base64"
+                },
+                "mimeType":
+                {
+                    "type": "string",
+                    "description": "Attachment mime type such as extension file for video, picture and document. Default to application/pdf. SV MAPPING: RT perestapi.imp.MIME_TYPE"
+                },
+                "name":
+                {
+                    "type": "string",
+                    "description": "The name of the attachment. The PDF document name of the invoice"
+                },
+                "url":
+                {
+                    "type": "string",
+                    "description": "Uniform Resource Locator, is a web page address (a subset of URI). Store the PDF file access path"
+                },
+                "size":
+                {
+                    "$ref": "#/definitions/Quantity",
+                    "description": "The size of the attachment."
+                }
+            }
+        },
+        "BillingAccountRef":
+        {
+            "type": "object",
+            "description": "Reference to the billing account in case of not billed item.",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "Unique-Identifier the billing account. SV_MAPPING: INVOICE_TRE_V.ACCOUNT_ID or CHARGE.ACCOUNT_ID"
+                },
+                "href": {
+                    "type": "string",
+                    "description": "Hyperlink to billing account (ACCOUNT). <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<billingAccount PEREST URL>/INVOICE_TRE_V.ACCOUNT_ID or CHARGE.ACCOUNT_ID"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Billingaccount. SV_MAPPING: INVOICE_TRE_V.ACCOUNT_NAME or ACCOUNT_TRE_V.ACCOUNT_NAME"
+                },
+                "@referredType": {
+                    "type": "string",
+                    "description": "The actual type of the target instance when needed for disambiguation. SV_MAPPING: perestapi.REFERRED_TYPE->billingAccount RT"
+                }				
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "InvoiceAddress": 
+		{
+            "type": "object",
+            "description": "The address to use for this invoice or statement. SV_MAPPING: INVOICE_IMAGE_TRE_V. Value for ADDRESS_CHOICE_CODE is used to distinquish what of the possible addresses will be used in ",
+            "properties": {
+                "officialName": {
+                    "type": "string",
+                    "description": "Party official name. SV_MAPPING: INVOICE_IMAGE_TRE_V.PERSON_OFFICIAL_NAME"
+                },
+                "mediumType": {
+                    "type": "string",
+                    "description": "The address type used for this invoice or statement. Possisble values: Customer postal address, Customer site address, Contact's postal address, Contact's home address, Contact's work address. SV MAPPING: INVOICE_IMAGE_TRE_V.ADDRESS_CHOICE_CODE and RT ADDRESS_CHOICE"
+                },
+                "characteristic": {
+                    "$ref": "#/definitions/MediumCharacteristic",
+                    "description": "Characteristic of this contact medium"
+                }
+            }
+        },
+        "MediumCharacteristic":
+        {
+            "type": "object",
+            "description": "Describes the InvoiceAddress medium characteristics.",
+            "properties":
+            {
+                "city":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.CITY"
+                },
+                "country":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.COUNTRY"
+                },
+                "postCode":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.POST_CODE"
+                },
+                "stateOrProvince":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.STATE"
+                },
+                "street1":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.LINE_1"
+                },
+                "street2":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.LINE_2"
+                },
+                "addressLine1":
+                {
+                    "type": "string",
+                    "description": "Address line 1, SV_MAPPING: ADDRESS_HISTORY.GENERAL_1"
+                },
+                "suburb":
+                {
+                    "type": "string",
+                    "description": "SV MAPPING: ADDRESS_HISTORY.SUBURB"
+                }
+            }
+        },                   
+        "Money":
+        {
+            "type": "object",
+            "description": "A base / value business entity used to represent money",
+            "properties":
+            {
+                "unit":
+                {
+                    "type": "string",
+                    "description": "Currency (ISO4217 norm uses 3 letters to define the currency). SV_MAPPING: CURRENCY_TRE_V.CURRENCY_SYMBOL"
+                },
+                "value":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "description": "A positive floating point number"
+                }
+            }
+        },
+        "PaymentMethodRef":
+        {
+            "type": "object",
+            "description": "PaymentMethod reference. A payment method defines a specific mean of payment (e.g direct debit).",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING: CUSTOMER_NODE_TRE_V.PAYMENT_METHOD_CODE. RT Payment Method"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the payment mean. SV_MAPPING: Abbreviation from RT PAYMENT_METHOD"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "PaymentRef":
+        {
+            "type": "object",
+            "description": "If an immediate payment has been done at the product order submission, the payment information are captured and stored (as a reference) in the order.",
+            "properties":
+            {
+                "id":
+                {
+                    "type": "string",
+                    "description": "SV_MAPPING: PAYMENT_TRE_V.RECEIPT_NR"
+                },
+                "href":
+                {
+                    "type": "string",
+                    "description": "Hyperlink to the related Payment entity. <http:/<PEREST_HOSTNAME>:<PEREST_PORT>/<Payment PEREST URL>/RECEIPT_NR"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "SV_MAPPING: PAYMENT_TRE_V.RECEIPT_NR"
+                },
+                "@type": {
+                    "type": "string",
+                    "description": "SV_MAPPING: PAYMENT_TRE_V.PAYMENT_TYPE_DISPLAY_NAME"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "Quantity":
+        {
+            "type": "object",
+            "description": "An amount in a given unit",
+            "properties":
+            {
+                "amount":
+                {
+                    "default": 1,
+                    "type": "number",
+                    "format": "float",
+                    "description": "Numeric value in a given unit"
+                },
+                "units":
+                {
+                    "type": "string",
+                    "description": "Unit. Default to bytes"
+                }
+            }
+        },  
+        "TaxItem": 
+		{
+            "type": "object",
+            "description": "A tax item is created for each tax rate and tax type used in the bill.",
+            "properties": {
+                "taxCategory": {
+                    "type": "string",
+                    "description": "Tax category: VAT"
+                },
+                "taxRate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Applied rate of the tax. Refer to SV_MAPPING: INVOICE_OTHER_DETAIL_TRE_V.INVOICE_TXT where TARIFF_OR_SUBTOTAL_NAME is tax.cmn.tCNTax#{}"
+                },
+                "taxAmount": {
+                    "$ref": "#/definitions/Money",
+                    "description": "Amount of tax expressed in the given currency. Refer to SV_MAPPING: INVOICE_OTHER_DETAIL_TRE_V.CHARGE where TARIFF_OR_SUBTOTAL_NAME is tax.cmn.tCNTax#{}"
+                }
+            }
+        },
+        "TimePeriod":
+        {
+            "type": "object",
+            "description": "A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.",
+            "properties":
+            {
+                "endDateTime":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End of the time period. SV MAPPING: INVOICE_TRE_V.EFFECTIVE_DATE - 1 second OR (if defined) CUSTOMER_NODE_TRE_V.ACTIVE_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                },
+                "startDateTime":
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start of the time period. SV MAPPING: INVOICE_TRE_V.EFFECTIVE_DATE. Format: yyyy-mm-ddThh:nn:ss"
+                }
+            }
+        },
+        "stateValue":
+        {
+            "type": "string",
+            "description": "Invoice state. Possible values: New, Validated, Sent, Patialy Paid, Settled. SV_MAPPING: Abbreviation from RT perestapi.CUSTOMER_BILL_STATE"
+        },
+        "Error":
+        {
+            "description": "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)",
+            "type": "object",
+            "required": [
+                "code",
+                "reason"
+            ],
+            "properties":
+            {
+                "code":
+                {
+                    "type": "string",
+                    "description": "Application relevant detail, defined in the API or a common list."
+                },
+                "reason":
+                {
+                    "type": "string",
+                    "description": "Explanation of the reason for the error which can be shown to a client user."
+                },
+                "message":
+                {
+                    "type": "string",
+                    "description": "More details and corrective actions related to the error which can be shown to a client user."
+                },
+                "status":
+                {
+                    "type": "string",
+                    "description": "HTTP Error code extension"
+                },
+                "referenceError":
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URI of documentation describing the error."
+                },
+                "@baseType":
+                {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the super-class."
+                },
+                "@schemaLocation":
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+                },
+                "@type":
+                {
+                    "type": "string",
+                    "description": "When sub-classing, this defines the sub-class entity name."
+                }
+            }
+        }
+    }
+}
+
